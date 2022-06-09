@@ -1,5 +1,5 @@
 from importlib import import_module
-from django.shortcuts import render
+from django.shortcuts import redirect,render
 from .models import Disease
 from .resource import DiseaseResource
 from django.contrib import messages
@@ -33,4 +33,4 @@ def addDisease(request):
         new_complexity=request.POST['complexity']
         d=Disease(d_name=new_disease,complexity=new_complexity)
         d.save()
-    return render(request,'upload_diseases.html')
+    return redirect('uploadfile')

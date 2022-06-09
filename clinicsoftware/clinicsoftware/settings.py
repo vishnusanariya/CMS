@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'refdoc.apps.RefdocConfig',
     'disease.apps.DiseaseConfig',
     'symptoms.apps.SymptomsConfig',
+    'backup.apps.BackupConfig',
     'import_export',
 ]
 

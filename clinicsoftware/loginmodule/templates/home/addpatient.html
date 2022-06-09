@@ -1,0 +1,144 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} Register {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+        <div class="row">
+          <div class="col-md-8">
+            <div class="card">
+
+              <form role="form" method="post" action="/patient_details">
+                {% csrf_token %} 
+
+                <div class="card-header">
+                    <h3 class="card-title">ADD PATIENT CREDENTIALS HERE</h3>
+                 
+
+                  
+                </div>
+
+                <div class="card-body">
+
+                    <div class="row">
+                      <div class="col-md-3 px-md-1">
+                        <div class="form-group">
+                          <label>First Name</label>
+                          <input class="form-control" id="fname" name="fname" required="" type="text" value="John">
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>Last Name</label>
+                            <input class="form-control" id="lname" name="lname" required="" type="text" value="Doe">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>BLOOD-GROUP</label>
+                            <input class="form-control" id="blood_grou" name="blood_group" required="" type="text" value="">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>AGE</label>
+                            <input class="form-control" id="age" name="age" required="" type="text" value="">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>WEIGHT</label>
+                            <input class="form-control" id="weight" name="weight" required="" type="text" value="">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>CONTACT</label>
+                            <input class="form-control" id="contact" name="contact" required="" type="text" value="">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>ADDRESS</label>
+                            <input class="form-control" id="address" name="address" required="" type="text" value="">
+                          </div>
+                        </div>
+                      </div>
+
+                      <div class="row">
+                        <div class="col-md-3 px-md-1">
+                          <div class="form-group">
+                            <label>REFRENCE-PERSON</label>
+                            <input class="form-control" id="rperson" name="rperson" required="" type="text" value="">
+                          </div>
+                        </div>
+                      </div>
+
+
+
+                    
+                </div>
+                <div class="card-footer">
+                  <button type="submit" name="submit" class="btn btn-fill btn-primary">SUBMIT</button>
+                  
+                </div>
+
+              </form>
+
+            </div>
+          </div>
+      </div>
+
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}
+
+
+
+
+    <!--<form action="/patient_details" method="post">
+        {% csrf_token %}
+        <label for="fname">First name:</label><br>
+        <input type="text" id="fname" name="fname" value="John"><br>
+        <label for="lname">Last name:</label><br>
+        <input type="text" id="lname" name="lname" value="Doe"><br><br>
+        <label for="fname">BLOOD-GROUP</label><br>
+        <input type="text" id="blood_group" name="blood_group" ><br>
+        <label for="lname">AGE</label><br>
+        <input type="text" id="age" name="age" ><br><br>
+        <label for="fname">WEIGHT</label><br>
+        <input type="text" id="weight" name="weight" ><br>
+        <label for="lname">CONTACT</label><br>
+        <input type="text" id="contact" name="contact" ><br><br>
+        <label for="fname">ADDRESS</label><br>
+        <input type="text" id="address" name="address" ><br>
+        <label for="lname">REFRENCE-PERSON</label><br>
+        <input type="text" id="rperson" name="rperson" ><br><br>
+        
+        <input type="submit" value="Submit">
+      </form> 
+</body>
+</html>

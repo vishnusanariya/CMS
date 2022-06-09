@@ -1,5 +1,5 @@
 from importlib import import_module
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Medicine
 from .resources import MedicineResource
 from django.contrib import messages
@@ -14,15 +14,24 @@ def Upload_Excel(request):
 
         if not new_med.name.endswith('xlsx'):
             messages.info(request,'wrong format valid xlsx')
-            return render(request,'upload_medicine.html')
+            return render(request,'home/uploadexternalfiles.html')
 
         imported_data=dataset.load(new_med.read(),format='xlsx')
         for data in imported_data:
             value=Medicine(data[0],data[1],data[2],data[3])
             value.save()
-    return render(request,'upload_medicine.html')
+    return render(request,'home/uploadexternalfiles.html')
 
 def view_medicine(request):
     meds=Medicine.objects.all()
     print(meds)
     return render(request,'viewmeds.html',{'meds':meds})
+
+def addMedicine(request):
+    if request.method == 'POST':
+        new_med=request.POST['medicine']
+        new_power=request.POST['power']
+        new_price=request.POST['price']
+        d=Medicine(medicine_name=new_med,medicine_power=new_power,medicine_price=new_price)
+        d.save()
+    return redirect('uploadfile')

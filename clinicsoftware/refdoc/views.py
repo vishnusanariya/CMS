@@ -1,5 +1,5 @@
 from importlib import import_module
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import RefDoc
 from .resource import refdocres
 from django.contrib import messages
@@ -34,4 +34,4 @@ def addRefdoc(request):
         doc_con=request.POST['refdoccontact']
         d=RefDoc(name=doc_name,profession=doc_prof,address=doc_addr,contact=doc_con)
         d.save()
-    return render(request,'refdoc_upload.html')
+    return redirect('uploadfile')

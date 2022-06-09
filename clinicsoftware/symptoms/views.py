@@ -1,5 +1,5 @@
 from importlib import import_module
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Symptoms
 from .resource import SymptomsResource
 from django.contrib import messages
@@ -33,4 +33,4 @@ def addSymptoms(request):
         new_complexity=request.POST['complexity']
         d=Symptoms(s_name=new_symptoms,complexity=new_complexity)
         d.save()
-    return render(request,'upload_symptoms.html')
+    return redirect('uploadfile')

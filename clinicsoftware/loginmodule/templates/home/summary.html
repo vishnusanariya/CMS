@@ -1,0 +1,85 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Typography {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header mb-5">
+        
+        <h1><span></span>{{s.fname}} {{s.lname}}'S SUMMARY </h1>
+       
+      </div>
+      <div class="card-body">
+        
+        
+        <div class="typography-line">
+          <h3><span>NAME:-</span>{{s.fname}} {{s.lname}} </h3>
+        </div>
+        <div class="typography-line">
+            <h3><span>DATE AND TIME:-</span>{{s.date}} {{s.time}} </h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>SYMPTOMS:-</span>{{s.symptoms}} </h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>DIAGNOSTIC</span>{{s.diagnostic}} </h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>REPORT:-</span>{{s.report}} </h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>FEES:-</span>{{s.fees}} </h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>PAID:-</span>{{s.paid}} </h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>LEFT FROM {{s.fname}} {{s.lname}} AT DATE {{date}}:-</span>{{s.left_from_patient}}</h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>LEFT FROM DOCTOR AT DATE {{date}}:-</span>{{s.left_from_doc}}</h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>TOTAL FEES :-</span>{{t.tfees}}</h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>TOTAL PAID :-</span>{{t.tpaid}}</h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>TOTAL LEFT FROM {{s.fname}} {{s.lname}}:-</span>{{t.tleft_from_patient}}</h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>TOTAL FROM DOCTOR :-</span>{{t.tleft_from_doc}}</h3>
+          </div>
+          
+        <div class="typography-line">
+            <!--<h3><span>PAID:-</span></h3>-->
+          <blockquote>
+            
+            <p class="blockquote blockquote-primary">
+                PRESCRIPTION:-<br><br><br>
+             {% for p in p1 %}
+                {{p}}<br>
+                {%endfor%}
+              <br>
+              <br>
+              
+            </p>
+          </blockquote>
+        </div>
+    
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

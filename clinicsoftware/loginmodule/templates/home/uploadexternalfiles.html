@@ -1,0 +1,251 @@
+{% extends "layouts/base.html" %} {% block title %} Register {% endblock %}
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %} {% block content %}
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card w-75">
+      <form role="form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-header">
+          <h3 class="card-title">UPLOAD EXECL FILE FOR MEDICINE</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8 px-md-1">
+              <div class="form-group">
+                <button class="btn btn-fill btn-primary w-50">
+                  CLICK HERE TO UPLOAD FILE
+                </button>
+                <input type="file" class="form-control" name="myfile" />
+                <button type="submit" class="btn btn-fill btn-primary">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      or
+      <form role="form"
+      class="sub-form"action="{% url 'addMedicine'%}" method="post">
+        {% csrf_token%}
+        <div class="form-group text-white w-75">
+          <table>
+            <tr>
+              <td>
+                medicine name:<input class="form-control" type="text" name="medicine">
+              </td>
+              <td>
+                power:<input class="form-control" type="text" name="power">
+              </td>
+              <td>
+                price:<input class="form-control" type="number" name="price">
+              </td>
+
+            </tr>
+          </table>
+          <button type="submit" class="btn btn-fill btn-primary">add</button>
+        </div>
+    </form>
+      <div class="card-footer">
+        <a href="{% url 'viewMeds'%}">
+          <button class="btn btn-fill btn-primary">
+            CLICK HERE TO VIEW MEDICINE
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card w-75">
+      <form role="form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-header">
+          <h3 class="card-title">UPLOAD EXECL FILE FOR DISEASE</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8 px-md-1">
+              <div class="form-group">
+                <button class="btn btn-fill btn-primary w-50">
+                  CLICK HERE TO UPLOAD FILE
+                </button>
+                <input type="file" class="form-control" name="mydisease" />
+                <button type="submit" class="btn btn-fill btn-primary">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      or
+      <form role="form"
+      class="sub-form"action="{% url 'addDisease'%}" method="post">
+        {% csrf_token%}
+        <div class="form-group text-white w-75">
+          <table>
+            <tr>
+              <td>
+                disease name:<input class="form-control" type="text" name="disease">
+              </td>
+              <td>
+                complexity:<input class="form-control" type="text" name="complexity">
+              </td>
+            </tr>
+          </table>
+          <button type="submit" class="btn btn-fill btn-primary">add</button>
+        </div>
+    </form>
+      <div class="card-footer">
+        <a href="{% url 'viewDisease'%}">
+          <button class="btn btn-fill btn-primary">
+            CLICK HERE TO VIEW DISEASE
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card w-75">
+      <form role="form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-header">
+          <h3 class="card-title">UPLOAD EXECL FILE FOR SYMPTOMS</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8 px-md-1">
+              <div class="form-group">
+                <button class="btn btn-fill btn-primary w-50">
+                  CLICK HERE TO UPLOAD FILE
+                </button>
+                <input type="file" class="form-control" name="mysymptoms" />
+                <button type="submit" class="btn btn-fill btn-primary">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      or
+      <form role="form"
+      class="sub-form"action="{% url 'addSymptoms'%}" method="post">
+        {% csrf_token%}
+        <div class="form-group text-white w-75">
+          <table>
+            <tr>
+              <td>
+                symptoms name:<input class="form-control" type="text" name="symptoms">
+              </td>
+              <td>
+                complexity:<input class="form-control" type="text" name="complexity">
+              </td>
+            </tr>
+          </table>
+          <button type="submit" class="btn btn-fill btn-primary">add</button>
+        </div>
+    </form>
+      <div class="card-footer">
+        <a href="{% url 'viewSymptoms'%}">
+          <button class="btn btn-fill btn-primary">
+            CLICK HERE TO VIEW SYMPTOMS
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+    <div class="card w-75">
+      <form role="form" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-header">
+          <h3 class="card-title">UPLOAD EXECL FILE FOR REFERENCE DOCTOR</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8 px-md-1">
+              <div class="form-group">
+                <button class="btn btn-fill btn-primary w-50">
+                  CLICK HERE TO UPLOAD FILE
+                </button>
+                <input type="file" class="form-control" name="myrefdocs" />
+                <button type="submit" class="btn btn-fill btn-primary">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      or
+      <form
+        role="form"
+        class="sub-form"
+        action="{% url 'addRefdoc'%}"
+        method="post"
+      >
+        {% csrf_token%}
+        <div class="form-group text-white w-75">
+          <table>
+            <tr>
+              <td>
+                name:
+                <input type="text" class="form-control" name="refdocname" />
+              </td>
+              <td>
+                profession:
+                <input
+                  type="text"
+                  class="form-control"
+                  name="refdocprofession"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td>
+                address:
+                <input type="text" class="form-control" name="refdocaddress" />
+              </td>
+              <td>
+                phone:
+                <input type="text" class="form-control" name="refdocphone" />
+              </td>
+            </tr>
+          </table>
+          <button class="btn btn-fill btn-primary" type="submit">add</button>
+        </div>
+      </form>
+      <div class="card-footer">
+        <a href="{% url 'viewRefDoc'%}">
+          <button class="btn btn-fill btn-primary">
+            CLICK HERE TO VIEW REFERENCE DOCTOR
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+  body {
+    color: white;
+    border-color: azure;
+  }
+  .form-group > input {
+    display: inline-block;
+  }
+</style>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

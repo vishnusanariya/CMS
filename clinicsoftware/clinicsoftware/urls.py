@@ -25,4 +25,5 @@ urlpatterns = [
      path('refdocs/',include('refdoc.urls')),
      path('disease/',include('disease.urls')),
      path('symptoms/',include('symptoms.urls')),
+        path('backup/',include('backup.urls')),
 ]

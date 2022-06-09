@@ -12,17 +12,28 @@ from .models import patient_health_detail
 from .models import Patient_group
 from .models import Account
 from medicine.models import Medicine
+from refdoc.models import RefDoc
+from symptoms.models import Symptoms
+from disease.models import Disease
+
+
 import datetime
 import json as simplejson
 import json
+from django.http import JsonResponse
+from django.db.models import Count
+
 # Create your views here.
 def home(request):
 
+    
+    return render(request,'home/index.html')
+def main_patient(request):
     patient = patient_detail.objects.all()
-    return render(request,'home.html',{'patient':patient})
+    return render(request,'home/patients.html',{'patient':patient})
 
 def addpatient(request):
-    return render(request,'addpatient.html')
+    return render(request,'home/addpatient.html')
 
 def patient_details(request):
 
@@ -39,9 +50,9 @@ def patient_details(request):
         user = patient_detail( fname = fname,lname = lname,blood_group = blood_group,age = age, weight =  weight,contact = contact,address = address , rperson = rperson)
         user.save()
 
-        return redirect('/')
+        return redirect('/patients')
     else:
-        return render(request,'home.html')
+        return redirect('/')
 
 def get_or_none(classmodel, **kwargs):
     try:
@@ -52,7 +63,7 @@ def get_or_none(classmodel, **kwargs):
 def addpatient_health_details(request,i):
     patient_health = patient_detail.objects.get(id=i)
     medi=Medicine.objects.all()
-    return render(request,'addpatient_health.html',{'patient':patient_health,'pid':patient_health.id,'medi':medi})
+    return render(request,'home/addpatient_health.html',{'patient':patient_health,'pid':patient_health.id,'medi':medi})
 
 def patient_health_details(request,i):
     if request.method=="POST":
@@ -74,22 +85,25 @@ def patient_health_details(request,i):
         user.prescription = json.dumps(listIWantToStore)
         user.save()
         patient = patient_detail.objects.all()
-        return render(request,'home.html',{'patient':patient})
+        return render(request,'home/index.html')#'home.html',{'patient':patient})
 
 def visit_summary(request):
     patient = patient_detail.objects.all()
-    return render(request,'visit_summary.html',{'patient':patient})
+    return render(request,'home/visit_summary.html',{'patient':patient})
 
 def particular_person_summary(request,i):
     visit=patient_health_detail.objects.filter(patient_id=i).all()
+    patient_info = patient_detail.objects.get(id=i)
+
     #print("-------------------------------------------------")
     #print(visit.patient_visit)
     #print("-------------------------------------------------")
-    s={'patient':visit,'id':i}
-    return render(request,'particular_patient.html',s)
+    s={'patient':visit,'id':i,'patient_info':patient_info}
+    return render(request,'home/particular_patient.html',s)
     
 def calclulation(i,j,pid):
     if i == j:
+        Account.objects.filter(patient_id = pid).update(tleft_from_patient=0,tleft_from_doc=0)
         return 0
     elif i > j:
         c=i-j
@@ -102,7 +116,11 @@ def calclulation(i,j,pid):
     
 def summary(request,i,j):
     s=patient_health_detail.objects.get(id=i)
-    #j is patient id i is visit no
+    #j is patient id and  i is visit no
+    g=patient_health_detail.objects.get(id=i)
+    jsonDec = json.decoder.JSONDecoder()
+    gList = jsonDec.decode(g.prescription)
+
     pid=j
     p1=patient_detail.objects.get(id=pid)
     paid=s.paid
@@ -126,29 +144,31 @@ def summary(request,i,j):
 
     if fees == paid:
         calclulation(Total_FEES,Total_PAID,pid)
-        summary={'s':s,'t':t}
-        return render(request,'summary.html',summary)
+        s=patient_health_detail.objects.get(id=i)
+        t=Account.objects.get(patient_id=pid)
+        summary={'s':s,'t':t,'p1':gList}
+        return render(request,'home/summary.html',summary)
     elif paid < fees:
         calclulation(Total_FEES,Total_PAID,pid)
         pleft=fees-paid
         patient_health_detail.objects.filter(id=i).update(left_from_patient=pleft)
         s=patient_health_detail.objects.get(id=i)
         t=Account.objects.get(patient_id=pid)
-        summary={'s':s,'t':t}
-        return render(request,'summary.html',summary)
+        summary={'s':s,'t':t,'p1':gList}
+        return render(request,'home/summary.html',summary)
     elif paid > fees:
         calclulation(Total_FEES,Total_PAID,pid)
         dleft=paid-fees
         patient_health_detail.objects.filter(id=i).update(left_from_doc=dleft)
         s=patient_health_detail.objects.get(id=i)
         t=Account.objects.get(patient_id=pid)
-        summary={'s':s,'t':t}
-        return render(request,'summary.html',summary)
+        summary={'s':s,'t':t,'p1':gList}
+        return render(request,'home/summary.html',summary)
 
 def patient_group(request): 
     
     p = patient_detail.objects.all()
-    return render(request,'patient_group.html',{'patient':p})
+    return render(request,'home/patient_group.html',{'patient':p})
 
 def create_group(request): 
     if request.method=="POST":
@@ -156,11 +176,14 @@ def create_group(request):
         mem_sep = []
         for i in mem:
          mem_sep.append(i.split(":"))
+
+
         print("-------------------------------------------------")
         print(mem)
         print(mem_sep)
         print(mem_sep[0][0])
         print("-------------------------------------------------")
+
         gname = request.POST['gname']
         user=Patient_group(gname=gname)
         listIWantToStore = mem_sep
@@ -173,18 +196,30 @@ def create_group(request):
     else:
          p = patient_detail.objects.all()
          s={'patient':p}
-         return render(request,'patient_group.html',s)
+         return render(request,'home/patient_group.html',s)
         
 def all_group(request): 
     g = Patient_group.objects.all()    
     s={'group':g}
-    return render(request,'all_group.html',s)
+    return render(request,'home/all_group.html',s)
 
 def particular_group(request,i):
+    #here i is gid
     g=Patient_group.objects.get(id=i)
     jsonDec = json.decoder.JSONDecoder()
     gList = jsonDec.decode(g.member)
     mem_sep = []
+    mem_sep1 = []
+    
+    for i in gList:
+        #print("this is i")
+        #print(i[0])#pid is patient id
+        pid = i[0]
+        advance_summ=patient_health_detail.objects.filter(patient_id=pid)
+        for j in advance_summ:
+            #print("this is j")
+            #print(j.id)
+            summary(request,j.id, pid )
     
     for j in gList:
         mem_sep.append({"id":j[0],"name":j[1]})
@@ -200,11 +235,16 @@ def particular_group(request,i):
     
     dleft_account = []
     pleft_account = []
-    print("-------------------------------------------------")
+    #print("-------------------------------------------------")
     for i in gList:
         #print(i[0])#pid is patient id
         pid = i[0]
-        print(pid)
+        #print(pid)
+        #print("-------------------------------------------------")
+        
+        #print(i[0])#pid is patient id
+        pid = i[0]
+        #print(pid)
     #print("-------------------------------------------------")
         o = Account.objects.get(patient_id=pid)
         o1 = patient_detail.objects.get(id=pid)
@@ -218,11 +258,97 @@ def particular_group(request,i):
 
         if o.tleft_from_patient != 0:
             pleft_account.append({'fname':o1.fname,'lname':o1.lname,'left':o.tleft_from_patient})
-        elif o.tleft_from_doc != 0:
-            dleft_account.append({'fname':o1.fname,'lname':o1.lname,'left':o.tleft_from_doc}) 
+            mem_sep1.append({"id":i[0],"name":i[1],"pleft":o.tleft_from_patient,"dleft":0})
+        else:
+            #pleft_account.append({'fname':o1.fname,'lname':o1.lname,'left':0})
+
+            if o.tleft_from_doc != 0:
+                dleft_account.append({'fname':o1.fname,'lname':o1.lname,'left':o.tleft_from_doc}) 
+                mem_sep1.append({"id":i[0],"name":i[1],"pleft":0,"dleft":o.tleft_from_doc})
+            else:
+                dleft_account.append({'fname':o1.fname,'lname':o1.lname,'left':0}) 
+                mem_sep1.append({"id":i[0],"name":i[1],"pleft":0,"dleft":o.tleft_from_doc})
     
     print("-------------------------------------------------")
         
     p = patient_detail.objects.all()
-    s={'list':mem_sep,'patient':p,'tpaid':Total_Group_fees,'tfees':Total_Group_paid,'tfrom_patient':Total_Group_from_patient,'tfrom_doc':Total_Group_from_doc,'list_pleft':pleft_account,'list_dleft':dleft_account}
-    return render(request,'particular_group.html',s)
+    s={'list':mem_sep,'list1':mem_sep1,'patient':p,'tpaid':Total_Group_fees,'tfees':Total_Group_paid,'tfrom_patient':Total_Group_from_patient,'tfrom_doc':Total_Group_from_doc,'list_pleft':pleft_account,'list_dleft':dleft_account}
+    return render(request,'home/particular_group.html',s)
+        
+        #    return render(request,'home/pageadddata.html')
+
+def api_temp(request):
+    m =[1,2,3]
+    return JsonResponse({'foo':m})
+
+def statistic(request):
+    patient = patient_detail.objects.all()
+    total_patient=0
+    current_month_patient=0
+    current_month_revenue=0
+    today_patient=0
+    today_revenue=0
+    daily_patient_list =[]
+    daily_revenue_list =[]
+    
+    for i in patient:
+        total_patient=total_patient+1
+
+    total_patient_month=0
+    date = datetime.date.today()
+    last_date=date.day
+    end_date = datetime.date.today()    
+    start_date = end_date - datetime.timedelta(last_date)       
+    monthly_id=patient_health_detail.objects.filter(date__range=[start_date,end_date])
+
+    for i in monthly_id:
+     #print(i.id)
+     #print(i.fees)
+     current_month_patient=current_month_patient+1
+     current_month_revenue=current_month_revenue+i.fees
+
+    today_patient_object=patient_health_detail.objects.filter(date=date)
+    for i in today_patient_object:
+        today_patient=today_patient+1
+        today_revenue=today_revenue+i.fees
+    date_temp=0
+
+    for i in monthly_id:
+        daily_patient=0
+        daily_revenue=0
+        
+        if date_temp == i.date:
+            continue
+        else:
+            date_temp=i.date
+            particular_date_object=patient_health_detail.objects.filter(date=i.date)
+
+            for j in particular_date_object:
+                daily_patient=daily_patient+1
+                daily_revenue=daily_revenue+j.fees
+
+            daily_patient_list.append(daily_patient)
+            daily_revenue_list.append(daily_revenue)
+
+    monthly_data_object=patient_health_detail.objects.filter(date__year='2022').values_list('date__month').annotate(total_fees=Count('fees'))
+    for j in monthly_data_object:
+        print(j)
+
+    print("---------------------------------")
+
+    print(current_month_patient)
+    print(current_month_revenue)
+    print(total_patient)  
+    print(today_patient)  
+    print(today_revenue)
+    print("---------------------------------")
+    print(*daily_patient_list)
+    print(*daily_revenue_list)
+    print("---------------------------------")
+    print(end_date) 
+    print(start_date) 
+
+    
+    return render(request,'statistics.html')
+
+
