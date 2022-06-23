@@ -12,6 +12,31 @@
     <div class="card ">
       <div class="card-header">
         <h4 class="card-title"> ALL PATIENTS</h4>
+        <form action="{% url 'searchPatientSummary'%}" method="get" value="{{request.GET.q}}" >
+          <div class="row">
+            <div class="col-md-3">
+              Search Patient:<input type="text" class="form-control " name="q" placeholder="Search patient here"/>            </div>
+            <div class="d-inline p-2 mt-3">
+              <input type="submit" value="Search" name="submit" class="form-control">
+            </div>
+            <div class="d-inline p-2 mt-3">
+              <a href="{%url 'visit_summary'%}"><button class="form-control " >Cancel</button></a>
+            </div>
+          </div>
+        </form>
+        {% if submitbutton == 'Search' and request.GET.q != '' %}
+        {% if results %}
+        {% for result in results %}
+        <div class="list-group ">
+          <a href="{%url 'particular_person_summary' result.id %}" class="list-group-item list-group-item-action w-25 border border-dark">
+            {{result.fname}}{{result.lname}}
+          </a>
+        </div>
+        {% endfor%}
+        {% else %}
+        no result found for this query
+        {% endif %}
+        {%endif%}
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -36,7 +61,7 @@
 
            
             <tbody>
-              {% for p in patient %}
+              {% for p in page_obj %}
               <tr>
                 <td>
 
@@ -72,7 +97,27 @@
       </div>
     </div>
   </div>
-
+  {% if page_obj.has_other_pages %}
+  <ul class="pagination justify-content-center ">
+    {% if page_obj.has_previous %}
+    <li class="pr-3"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li class="disabled pr-2"><span>&laquo;</span></li>
+  {% endif %}
+  {% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+      <li class="active pr-2"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+      <li class="pr-2"><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <li class="pr-2"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+  {% else %}
+    <li class="disabled pl-3"><span>&raquo;</span></li>
+  {% endif %}
+  </ul>
+  {% endif %}
   
   
 

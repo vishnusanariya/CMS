@@ -4,4 +4,4 @@ from .models import Symptoms
 # Register your models here.
 @admin.register(Symptoms)
 class Symptomsadmin(ImportExportModelAdmin):
-    list_display=('s_name','complexity')
+    list_display=['symptoms']

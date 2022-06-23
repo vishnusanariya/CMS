@@ -3,7 +3,9 @@
 {% block title %} UI Typography {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -19,58 +21,83 @@
         
         
         <div class="typography-line">
-          <h3><span>NAME:-</span>{{s.fname}} {{s.lname}} </h3>
+          <h3><span>NAME</span>: {{s.fname}} {{s.lname}} </h3>
         </div>
         <div class="typography-line">
-            <h3><span>DATE AND TIME:-</span>{{s.date}} {{s.time}} </h3>
+            <h3><span>DATE AND TIME</span>: {{s.date}} {{s.time}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>SYMPTOMS:-</span>{{s.symptoms}} </h3>
+            <h3><span>SYMPTOMS</span>: {{s.symptoms}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>DIAGNOSTIC</span>{{s.diagnostic}} </h3>
+            <h3><span>DIAGNOSTIC</span>: {{s.diagnostic}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>REPORT:-</span>{{s.report}} </h3>
+            <h3><span>REPORT</span>: {{s.report}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>FEES:-</span>{{s.fees}} </h3>
+            <h3><span>FEES</span>: {{s.fees}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>PAID:-</span>{{s.paid}} </h3>
+            <h3><span>PAID_ORIGINAL ON {{s.date}}</span>: {{s.paid_original}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>LEFT FROM {{s.fname}} {{s.lname}} AT DATE {{date}}:-</span>{{s.left_from_patient}}</h3>
+            <h3><span>PAID (after settlement from remaining)</span>: {{s.paid}} </h3>
           </div>
           <div class="typography-line">
-            <h3><span>LEFT FROM DOCTOR AT DATE {{date}}:-</span>{{s.left_from_doc}}</h3>
+            <h3><span>LEFT FROM {{s.fname}} {{s.lname}} AT DATE {{date}}</span>: {{s.left_from_patient}}</h3>
           </div>
           <div class="typography-line">
-            <h3><span>TOTAL FEES :-</span>{{t.tfees}}</h3>
+            <h3><span>LEFT FROM DOCTOR AT DATE {{date}}</span>: {{s.left_from_doc}}</h3>
           </div>
           <div class="typography-line">
-            <h3><span>TOTAL PAID :-</span>{{t.tpaid}}</h3>
+            <h3><span>TOTAL FEES </span>: {{t.tfees}}</h3>
           </div>
           <div class="typography-line">
-            <h3><span>TOTAL LEFT FROM {{s.fname}} {{s.lname}}:-</span>{{t.tleft_from_patient}}</h3>
+            <h3><span>TOTAL PAID </span>: {{t.tpaid}}</h3>
           </div>
           <div class="typography-line">
-            <h3><span>TOTAL FROM DOCTOR :-</span>{{t.tleft_from_doc}}</h3>
+            <h3><span>TOTAL LEFT FROM {{s.fname}} {{s.lname}}</span>: {{t.tleft_from_patient}}</h3>
+          </div>
+          <div class="typography-line">
+            <h3><span>TOTAL FROM DOCTOR </span>: {{t.tleft_from_doc}}</h3>
           </div>
           
         <div class="typography-line">
             <!--<h3><span>PAID:-</span></h3>-->
           <blockquote>
             
-            <p class="blockquote blockquote-primary">
-                PRESCRIPTION:-<br><br><br>
-             {% for p in p1 %}
-                {{p}}<br>
-                {%endfor%}
-              <br>
-              <br>
+            <div class="blockquote blockquote-primary">
               
-            </p>
+                PRESCRIPTION:-<br><br><br>
+                
+                
+                
+                
+                <table style="width:100%">
+                  <tr>
+                    <th>MEDICINE</th>
+                    <th>NOTE</th>
+                    <th>TIME</th>
+                    <th>COUNT</th>
+
+                  </tr>
+                  {% for p1 in prescription_details%}
+                  <tr>
+                    <td>{{p1.p}}</td>
+                    <td>{{p1.n}}</td>
+                    <td>
+                      {{p1.t}}</td>
+                      <td>{{p1.c}}</td>
+
+                  </tr>
+                  {%endfor%}
+                  
+                </table>
+                
+
+              
+            </div>
           </blockquote>
         </div>
     

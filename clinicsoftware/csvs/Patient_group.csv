@@ -1,4 +1,1 @@
 id,gname,member,tfees,tpaid,tleft_from_patient,tleft_from_doc
-1,a,"[[""1"", ""John Doe""], [""2"", ""sahil Doe""], [""3"", ""vishnu Doe""]]",0,0,0,0
-2,js,"[[""1"", ""John Doe""], [""2"", ""sahil Doe""]]",0,0,0,0
-3,vs,"[[""3"", ""vishnu Doe""], [""1"", ""John Doe""]]",0,0,0,0

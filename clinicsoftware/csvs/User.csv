@@ -1,2 +1,1 @@
 logentry,id,password,last_login,is_superuser,username,first_name,last_name,email,is_staff,is_active,date_joined,groups,user_permissions
-NA,1,pbkdf2_sha256$320000$ILbL9b5wS33xDoz0HBAiFg$qoY4PZqdpA4dkwdufRDknYEhjE2Dq0HrNGwxIw1YdEw=,2022-06-09 06:12:02.906049+00:00,True,admin,,,,True,True,2022-06-09 06:11:42.579585+00:00,auth.Group.None,auth.Permission.None

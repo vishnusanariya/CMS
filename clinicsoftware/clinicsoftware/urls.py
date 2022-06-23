@@ -19,11 +19,11 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+     path('admin/', admin.site.urls),
      path('',include('loginmodule.urls')),
      path('medicine/',include('medicine.urls')),
      path('refdocs/',include('refdoc.urls')),
      path('disease/',include('disease.urls')),
      path('symptoms/',include('symptoms.urls')),
-        path('backup/',include('backup.urls')),
+     path('backup/',include('backup.urls')),
 ]

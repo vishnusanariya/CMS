@@ -1,7 +1,2 @@
-id,patient_id,fname,lname,symptoms,diagnostic,prescription,report,date,time,fees,paid,left_from_patient,left_from_doc
-1,1,John,Doe,add,saA,"[""Paracitamol""]",as,2022-06-08,23:58:59.822637,5,0,5,0
-2,2,sahil,Doe,add,saA,"[""soframacin"", ""Paracitamol""]",as,2022-06-08,23:59:17.212532,1,5,0,4
-3,3,vishnu,Doe,add,saA,"[""Paracitamol""]",as,2022-06-08,23:59:30.309587,2,3,0,1
-4,1,John,Doe,add,saA,"[""Paracitamol""]",as,2022-06-09,00:00:24.879716,5,10,0,5
-5,2,sahil,Doe,add,saA,"[""soframacin""]",as,2022-06-09,00:01:34.567645,3,0,3,0
-6,2,sahil,Doe,add,saA,"[""dolo""]",as,2022-06-09,00:02:36.308767,1,5,0,4
+id,patient_id,fname,lname,symptoms,diagnostic,prescription,note,m_time,countt,report,date,time,fees,paid,paid_original,left_from_patient,left_from_doc
+1,1,John,Doe,,,"[""Paracitamol"", ""Paracitamol"", ""Paracitamol"", ""Paracitamol"", ""Paracitamol""]","["""", """", """", """", """"]","[""OD"", ""OD"", ""OD"", ""OD"", ""OD""]","["""", """", """", """", """"]",,2022-06-22,00:58:50.733479,500,500,500,0,0

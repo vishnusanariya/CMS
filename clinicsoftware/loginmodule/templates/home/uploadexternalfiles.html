@@ -6,7 +6,7 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card w-75">
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" action="{% url 'uploadfile'%}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card-header">
           <h3 class="card-title">UPLOAD EXECL FILE FOR MEDICINE</h3>
@@ -17,8 +17,11 @@
               <div class="form-group">
                 <button class="btn btn-fill btn-primary w-50">
                   CLICK HERE TO UPLOAD FILE
+                  <input type="file" class="form-control" name="myfile" />
                 </button>
-                <input type="file" class="form-control" name="myfile" />
+                
+
+
                 <button type="submit" class="btn btn-fill btn-primary">
                   Upload
                 </button>
@@ -62,7 +65,7 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card w-75">
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" action="{% url 'uploaddisease'%}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card-header">
           <h3 class="card-title">UPLOAD EXECL FILE FOR DISEASE</h3>
@@ -73,11 +76,14 @@
               <div class="form-group">
                 <button class="btn btn-fill btn-primary w-50">
                   CLICK HERE TO UPLOAD FILE
+                  <input type="file" class="form-control" name="mydisease" />
                 </button>
-                <input type="file" class="form-control" name="mydisease" />
+                
                 <button type="submit" class="btn btn-fill btn-primary">
                   Upload
                 </button>
+
+                
               </div>
             </div>
           </div>
@@ -114,7 +120,7 @@
 <div class="row">
   <div class="col-md-8">
     <div class="card w-75">
-      <form role="form" method="post" enctype="multipart/form-data">
+      <form role="form" method="post" action="{% url 'uploadSymptoms'%}" enctype="multipart/form-data">
         {% csrf_token %}
         <div class="card-header">
           <h3 class="card-title">UPLOAD EXECL FILE FOR SYMPTOMS</h3>
@@ -125,8 +131,9 @@
               <div class="form-group">
                 <button class="btn btn-fill btn-primary w-50">
                   CLICK HERE TO UPLOAD FILE
+                  <input type="file" class="form-control" name="mysymptoms" />
                 </button>
-                <input type="file" class="form-control" name="mysymptoms" />
+                
                 <button type="submit" class="btn btn-fill btn-primary">
                   Upload
                 </button>
@@ -163,78 +170,8 @@
     </div>
   </div>
 </div>
-<div class="row">
-  <div class="col-md-8">
-    <div class="card w-75">
-      <form role="form" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        <div class="card-header">
-          <h3 class="card-title">UPLOAD EXECL FILE FOR REFERENCE DOCTOR</h3>
-        </div>
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-8 px-md-1">
-              <div class="form-group">
-                <button class="btn btn-fill btn-primary w-50">
-                  CLICK HERE TO UPLOAD FILE
-                </button>
-                <input type="file" class="form-control" name="myrefdocs" />
-                <button type="submit" class="btn btn-fill btn-primary">
-                  Upload
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </form>
-      or
-      <form
-        role="form"
-        class="sub-form"
-        action="{% url 'addRefdoc'%}"
-        method="post"
-      >
-        {% csrf_token%}
-        <div class="form-group text-white w-75">
-          <table>
-            <tr>
-              <td>
-                name:
-                <input type="text" class="form-control" name="refdocname" />
-              </td>
-              <td>
-                profession:
-                <input
-                  type="text"
-                  class="form-control"
-                  name="refdocprofession"
-                />
-              </td>
-            </tr>
-            <tr>
-              <td>
-                address:
-                <input type="text" class="form-control" name="refdocaddress" />
-              </td>
-              <td>
-                phone:
-                <input type="text" class="form-control" name="refdocphone" />
-              </td>
-            </tr>
-          </table>
-          <button class="btn btn-fill btn-primary" type="submit">add</button>
-        </div>
-      </form>
-      <div class="card-footer">
-        <a href="{% url 'viewRefDoc'%}">
-          <button class="btn btn-fill btn-primary">
-            CLICK HERE TO VIEW REFERENCE DOCTOR
-          </button>
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
+
+
 <style>
   body {
     color: white;

@@ -3,7 +3,9 @@
 {% block title %} UI Tables {% endblock %} 
 
 <!-- Specific Page CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}
+<style></style>
+{% endblock stylesheets %}
 
 {% block content %}
 
@@ -12,6 +14,31 @@
     <div class="card ">
       <div class="card-header">
         <h4 class="card-title"> ALL PATIENTS</h4>
+        <form action="{% url 'searchPatient'%}" method="get" value="{{request.GET.q}}" >
+          <div class="row">
+            <div class="col-md-3">
+              Search Patient:<input type="text" class="form-control " name="q" placeholder="Search patient here"/>            </div>
+            <div class="d-inline p-2 mt-3">
+              <input type="submit" value="Search" name="submit" class="form-control">
+            </div>
+            <div class="d-inline p-2 mt-3">
+              <a href="{%url 'main_patient'%}"><button class="form-control " >Cancel</button></a>
+            </div>
+          </div>
+        </form>
+        {% if submitbutton == 'Search' and request.GET.q != '' %}
+        {% if results %}
+        {% for result in results %}
+        <div class="list-group ">
+          <a href="{%url 'addpatient_health_details' result.id %}" class="list-group-item list-group-item-action w-25 border border-dark">
+            {{result.fname}}{{result.lname}}
+          </a>
+        </div>
+        {% endfor%}
+        {% else %}
+        no result found for this query
+        {% endif %}
+        {%endif%}
       </div>
       <div class="card-body">
         <div class="table-responsive">
@@ -22,23 +49,27 @@
                   Name
                 </th>
                 <th class="text-center">
-                    DETAILS
-                </th>
-                <th>
-                  AGE
-                </th>
-                <th>
-                  WEIGHT
+                  DELETE
                 </th>
                 <th class="text-center">
                   CONTACT
+                </th>
+                
+                <th class="text-center">
+                  NOTE
+                </th>
+                <th class="text-center">
+                  DETAILS
+                </th>
+                <th class="text-center">
+                 ACCOUNT
                 </th>
               </tr>
             </thead>
 
            
             <tbody>
-              {% for p in patient %}
+              {% for p in page_obj %}
               <tr>
                 <td>
 
@@ -47,7 +78,7 @@
                           <div class="row">
                             <div class="col-md-8">
                               <a href="{% url 'addpatient_health_details' p.id %}">
-                              <button class="btn btn-primary btn-block" >{{p.fname}} {{p.lname}}  </button>
+                              <button class="btn btn-primary btn-block" >{{p.fname}} {{p.lname}}</button>
                               </a>
                             </div>
                           </div>
@@ -56,25 +87,44 @@
                       
                 </td>
                 <td>
+                  <a href="{% url 'deletepatient' p.id %}"><i class="bi bi-trash"></i></a>
+                </td>
+               
+                <td class="text-center">
+                    {{p.contact}}
+                </td>
+
+                <td class="text-center">
+                  {{p.note}}
+              </td>
+
+                <td>
                   <div class="row">
                     <div class="col-lg-8 ml-auto mr-auto">
                       <div class="row">
                         <div class="col-md-8">
-                          <button class="btn btn-primary btn-block" >VIEW DETAILS</button>
+                          <a href="{% url 'viewdetail' p.id %}">
+                          
+                          <h3>VIEW DETAILS </h3>
+                          </a>
                         </div>
                       </div>
                     </div>
                   </div>
               </td>
-                <td>
-                    {{p.age}}
-                </td>
-                <td>
-                    {{p.weight}}
-                </td>
-                <td class="text-center">
-                    {{p.contact}}
-                </td>
+              <td>
+                <div class="row">
+                  <div class="col-lg-8 ml-auto mr-auto">
+                    <div class="row">
+                      <div class="col-md-8">
+                        <a href="{% url 'settle_account' p.id %}">
+                        <button class="btn btn-primary btn-block" >₹</button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </td>
               </tr>
               {%endfor%}
              
@@ -84,7 +134,27 @@
       </div>
     </div>
   </div>
-
+  {% if page_obj.has_other_pages %}
+  <ul class="pagination justify-content-center ">
+    {% if page_obj.has_previous %}
+    <li class="pr-3"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li class="disabled pr-2"><span>&laquo;</span></li>
+  {% endif %}
+  {% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+      <li class="active pr-2"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+      <li class="pr-2"><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <li class="pr-2"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+  {% else %}
+    <li class="disabled pl-3"><span>&raquo;</span></li>
+  {% endif %}
+  </ul>
+  {% endif %}
   
   
 

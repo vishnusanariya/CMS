@@ -4,4 +4,4 @@ from .models import Disease
 # Register your models here.
 @admin.register(Disease)
 class Diseaseadmin(ImportExportModelAdmin):
-    list_display=('d_name','complexity')
+    list_display=['disease']

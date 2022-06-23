@@ -70,6 +70,14 @@
               <p>BACKUP</p>
             </a>
           </li>
+          <li class="{% if 'tables' in segment %} active {% endif %}">
+            <a href="{% url 'ref_doctor_all_groups' %}">
+              <i class="tim-icons icon-puzzle-10"></i>
+              <p>REF-DOCTOR</p>
+            </a>
+          </li>
+          
+
          <!-- <li class="{% if 'typography' in segment %} active {% endif %}">
             <a href="/ui-typography.html">
               <i class="tim-icons icon-align-center"></i>

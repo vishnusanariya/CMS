@@ -1,4 +1,2 @@
-account,id,fname,lname,blood_group,age,weight,contact,address,rperson
-Account object (1),1,John,Doe,a+,12,30,12334,surat,aaa
-Account object (2),2,sahil,Doe,a+,12,30,12334,surat,aaa
-Account object (3),3,vishnu,Doe,a+,12,30,12334,surat,aaa
+account,id,fname,lname,note,age,weight,contact,address,rperson
+NA,1,John,Doe,,0,0,0,,

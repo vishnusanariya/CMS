@@ -18,9 +18,9 @@ def Upload_Symptoms(request):
 
         imported_data=dataset.load(new_symptoms.read(),format='xlsx')
         for data in imported_data:
-            value=Symptoms(data[0],data[1],data[2])
+            value=Symptoms(data[0],data[1])
             value.save()
-    return render(request,'upload_symptoms.html')
+    return render(request,'home/uploadexternalfiles.html')
 
 def view_Symptoms(request):
     symptoms=Symptoms.objects.all()
@@ -30,7 +30,7 @@ def view_Symptoms(request):
 def addSymptoms(request):
     if request.method == 'POST':
         new_symptoms=request.POST['symptoms']
-        new_complexity=request.POST['complexity']
-        d=Symptoms(s_name=new_symptoms,complexity=new_complexity)
+        
+        d=Symptoms(symptoms=new_symptoms)
         d.save()
     return redirect('uploadfile')

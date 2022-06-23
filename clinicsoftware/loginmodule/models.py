@@ -7,29 +7,33 @@ class patient_detail(models.Model):
     patient_id=models.AutoField
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20)
-    blood_group = models.CharField(max_length=5)
-    age = models.IntegerField()
-    weight = models.IntegerField()
-    contact = models.IntegerField()
-    address  = models.CharField(max_length=50)
-    rperson = models.CharField(max_length=20)
+    note = models.TextField(max_length=40,null=True)
+    age = models.IntegerField(null=True)
+    weight = models.IntegerField(null=True)
+    contact = models.IntegerField(null=True)
+    address  = models.CharField(max_length=50,null=True)
+    rperson = models.CharField(max_length=20,null=True)
     
     def __str__(self):
          return self.fname +' '+ self.lname
 
 class patient_health_detail(models.Model):
     patient_visit=models.AutoField
-    patient_id=models.IntegerField(default=0)
+    patient_id=models.ForeignKey(patient_detail, on_delete=models.CASCADE)
     fname = models.CharField(max_length=20)
     lname = models.CharField(max_length=20)
     symptoms = models.CharField(max_length=30)
     diagnostic = models.CharField(max_length=30)
     prescription= models.TextField(max_length=30)
+    note = models.TextField(max_length=30,default=0)
+    m_time = models.TextField(max_length=30,default=0)
+    countt = models.TextField(max_length=20,default=0)
     report = models.CharField(max_length=30)
     date = models.DateField(default=datetime.now, blank=True)
     time=models.TimeField(default=datetime.now, blank=True)
     fees = models.IntegerField(default=0)
     paid = models.IntegerField(default=0)
+    paid_original=models.IntegerField(default=0)
     left_from_patient=models.IntegerField(default=0)
     left_from_doc=models.IntegerField(default=0)
     

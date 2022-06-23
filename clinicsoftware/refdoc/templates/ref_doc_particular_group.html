@@ -1,0 +1,162 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Tables {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}{% endblock stylesheets %}
+
+{% block content %}
+
+
+
+<div class="row">
+  <div class="col-md-8">
+    <div class="card w-75">
+      <form role="form" method="post" action="/refdocs/ref_doctor_particular_group/{{gid}}" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="card-header">
+          <h3 class="card-title">UPLOAD EXECL FILE FOR REFERENCE DOCTOR {{gid}}</h3>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8 px-md-1">
+              <div class="form-group">
+                <button class="btn btn-fill btn-primary w-50">
+                  CLICK HERE TO UPLOAD FILE
+                  <input type="file" class="form-control" name="myrefdocs" />
+                </button>
+                
+                <button type="submit" class="btn btn-fill btn-primary">
+                  Upload
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      or
+      <form role="form"
+      class="sub-form"action="/refdocs/addRefDoc/{{gid}}" method="post">
+        {% csrf_token%}
+        <div class="form-group text-white w-75">
+          <table>
+            <tr>
+              <td>
+                name:<input class="form-control" type="text" name="refdocname">
+              </td>
+              <td>
+                details:<input class="form-control" type="text" name="refdocdetail">
+              </td>
+            </tr>
+          </table>
+          <button type="submit" class="btn btn-fill btn-primary">add</button>
+        </div>
+    </form>
+      <div class="card-footer">
+        <a href="{% url 'viewRefDoc'%}">
+          <button class="btn btn-fill btn-primary">
+            CLICK HERE TO VIEW REFERENCE DOCTOR
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card ">
+      <div class="card-header">
+        <h3 class="card-title"> ALL DOCTORS</h3>
+        <form action="{% url 'searchrefdoc'%}" method="get" value="{{request.GET.q}}" >
+          <div class="row">
+            <div class="col-md-3">
+              Search group:<input type="text" class="form-control " name="q" placeholder="Search patient here"/>            </div>
+            <div class="d-inline p-2 mt-3">
+              <input type="submit" value="Search" name="submit" class="form-control">
+            </div>
+            <div class="d-inline p-2 mt-3">
+              <a href="{%url 'ref_doctor_all_groups' %}"><button class="form-control " >Cancel</button></a>
+            </div>
+          </div>
+        </form>
+        {% if submitbutton == 'Search' and request.GET.q != '' %}
+        {% if results %}
+        {% for result in results %}
+        <div class="list-group ">
+          <a href="{%url 'print_ref_doctor' result.id %}" class="list-group-item list-group-item-action w-25 border border-dark">
+            {{result.name}}{{result.details}}
+          </a>
+        </div>
+        {% endfor%}
+        {% else %}
+        no result found for this query
+        {% endif %}
+        {%endif%}
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table tablesorter " id="">
+            <thead class=" text-primary">
+              <tr>
+                <th >
+                  <h4>Name</h4>
+                </th>
+                
+                <th>
+                 <h4> DETAILS</h4>
+                </th>
+                
+              </tr>
+            </thead>
+
+           
+            <tbody>
+              {% for p in page_obj %}
+              
+              <tr>
+                
+                <td>
+                  <a href="{% url 'print_ref_doctor' p.id %}">
+                <h5>{{p.name}} </h5>
+                   </a> 
+                </td>
+              
+                <td>
+                    {{p.details}}
+                </td>
+              </tr>
+           
+              {%endfor%}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% if page_obj.has_other_pages %}
+  <ul class="pagination justify-content-center ">
+    {% if page_obj.has_previous %}
+    <li class="pr-3"><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+  {% else %}
+    <li class="disabled pr-2"><span>&laquo;</span></li>
+  {% endif %}
+  {% for i in page_obj.paginator.page_range %}
+    {% if page_obj.number == i %}
+      <li class="active pr-2"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+    {% else %}
+      <li class="pr-2"><a href="?page={{ i }}">{{ i }}</a></li>
+    {% endif %}
+  {% endfor %}
+  {% if page_obj.has_next %}
+    <li class="pr-2"><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+  {% else %}
+    <li class="disabled pl-3"><span>&raquo;</span></li>
+  {% endif %}
+  </ul>
+  {% endif %}
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

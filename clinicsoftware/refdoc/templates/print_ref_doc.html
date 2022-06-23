@@ -1,0 +1,84 @@
+{% extends "layouts/base.html" %}
+
+{% block title %} UI Typography {% endblock %} 
+
+<!-- Specific Page CSS goes HERE  -->
+{% block stylesheets %}
+<style>
+@media print {
+    .noprint{
+      display:none;
+    }
+    .print{
+      color: black;
+    }
+  }
+  
+  </style>
+{% endblock stylesheets %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header mb-5">
+        
+        <h1><span></span>DOCTOR'S DETAILS</h1>
+       
+      </div>
+      <div class="card-body">
+        
+        <div class="table-responsive">
+            <table class="table tablesorter " id="">
+              <thead class=" text-primary">
+                <tr>
+                  <th >
+                    <h3>Name</h3>
+                  </th>
+                  <th>
+                    <h3> </h3>
+                   </th>
+                  
+                  <th>
+                   <h3> DETAILS</h3>
+                  </th>
+                  
+                </tr>
+              </thead>
+  
+             
+              <tbody>
+                
+                
+                <tr>
+                  <td>
+                  <h4>{{print_doc.name}} </h4>                   
+                  </td>
+                  <td>
+                    <h3></h3>           
+                    </td>
+                  <td>
+                     <h4> {{print_doc.details}}</h4>
+                  </td>
+                </tr>
+              </a>
+                
+              </tbody>
+            </table>
+          </div>
+ 
+    
+      </div>
+      <div class="card-footer">
+        <input type="button" name="submit" class="btn btn-fill btn-primary noprint" value="PRINT" onclick="window.print();"></input>
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

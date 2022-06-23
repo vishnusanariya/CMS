@@ -18,9 +18,9 @@ def Upload_Disease(request):
 
         imported_data=dataset.load(new_disease.read(),format='xlsx')
         for data in imported_data:
-            value=Disease(data[0],data[1],data[2])
+            value=Disease(data[0],data[1])
             value.save()
-    return render(request,'upload_diseases.html')
+    return render(request,'home/uploadexternalfiles.html')
 
 def view_Disease(request):
     disease=Disease.objects.all()
@@ -30,7 +30,7 @@ def view_Disease(request):
 def addDisease(request):
     if request.method == 'POST':
         new_disease=request.POST['disease']
-        new_complexity=request.POST['complexity']
-        d=Disease(d_name=new_disease,complexity=new_complexity)
+       
+        d=Disease(disease=new_disease,complexity=new_complexity)
         d.save()
     return redirect('uploadfile')

@@ -13,14 +13,14 @@
         <thead>
             <tr>
                 <th scope="col">name</th>
-                <th scope="col">profession</th>
+                <th scope="col">details</th>
             </tr>
         </thead>
         <tbody>
             {%for doc in docs%}
             <tr>
                 <th scope="row">{{doc.name}}</th>
-                <td>{{doc.profession}}</td>
+                <td>{{doc.details}}</td>
             </tr>
             {%endfor%}
         </tbody>
