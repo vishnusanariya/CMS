@@ -19,7 +19,10 @@ def Upload_Excel(request):
         imported_data=dataset.load(new_med.read(),format='xlsx')
         for data in imported_data:
             value=Medicine(data[0],data[1],data[2],data[3])
-            value.save()
+            if not Medicine.objects.filter(medicine_name=data[1],medicine_power=data[2],medicine_price=data[3]).exists():
+                value.save()
+            else:
+                continue
     return render(request,'home/uploadexternalfiles.html')
 
 def view_medicine(request):

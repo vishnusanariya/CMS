@@ -19,7 +19,12 @@ def Upload_Disease(request):
         imported_data=dataset.load(new_disease.read(),format='xlsx')
         for data in imported_data:
             value=Disease(data[0],data[1])
-            value.save()
+            if not Disease.objects.filter(disease=data[1]).exists():
+                t1=Disease.objects.filter(disease=data[1])
+                print(t1)
+                value.save()
+            else:
+                continue
     return render(request,'home/uploadexternalfiles.html')
 
 def view_Disease(request):

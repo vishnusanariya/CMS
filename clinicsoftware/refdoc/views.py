@@ -83,12 +83,12 @@ def ref_doctor_particular_group(request,i):
 
         imported_data=dataset.load(new_doc.read(),format='xlsx')
         for data in imported_data:
-            print(data[0])
-            print(data[1])
-            print(data[2])
             value=RefDoc(data[0],data[1],data[2])
             value.gid=t1
-            value.save()
+            if not RefDoc.objects.filter(gid=t1,name=data[1],details=data[2]).exists():
+                value.save()
+            else:
+                continue
         #parti_cate_doc=RefDoc.objects.filter(gid=i)
         #return render(request,'ref_doc_particular_group.html',{'gid':i})    
         return redirect(reverse('ref_doctor_all_groups'))

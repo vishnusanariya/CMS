@@ -19,7 +19,10 @@ def Upload_Symptoms(request):
         imported_data=dataset.load(new_symptoms.read(),format='xlsx')
         for data in imported_data:
             value=Symptoms(data[0],data[1])
-            value.save()
+            if not Symptoms.objects.filter(symptoms=data[1]).exists():
+                value.save()
+            else:
+                continue
     return render(request,'home/uploadexternalfiles.html')
 
 def view_Symptoms(request):
